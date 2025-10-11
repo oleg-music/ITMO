@@ -1,0 +1,10 @@
+info
+remove_greater
+Ivan
+-100 -10
+175
+12.03.2005
+YELLOW
+BLACK
+2 0 2 Moscow
+info
