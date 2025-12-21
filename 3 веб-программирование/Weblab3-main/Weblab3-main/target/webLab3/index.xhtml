@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Clock page</title>
+    <meta charset="UTF-8" />
+    <h:outputStylesheet library="css" name="clock2.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="header">
+            <div class="header-text">
+                <p class="fio">ФИО: Музыка Олег Сергеевич</p>
+                <p class="num-of-group">Учебная группа: P3220</p>
+                <p class="num-of-var">Номер варианта: 20386</p>
+            </div>
+        </div>
+
+        <div class="clock-container">
+            <div class="clock-title">Текущие дата и время</div>
+            <div class="clock-time">
+                <div class="date-display" id="date-display"></div>
+                <div id="clock">
+                    <div class="clock-part">
+                        <span class="clock" id="hours">00</span>
+                        <span class="clock-label">Часы</span>
+                    </div>
+                    <div class="clock-part">
+                        <span class="clock" id="minutes">00</span>
+                        <span class="clock-label">Минуты</span>
+                    </div>
+                    <div class="clock-part">
+                        <span class="clock" id="seconds">00</span>
+                        <span class="clock-label">Секунды</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <h:link outcome="main" value="Перейти на основную страницу приложения" styleClass="nav-link"/>
+        </div>
+    </div>
+    <h:outputScript library="js" name="clock1.js"/>
+</h:body>
+</html>

@@ -1,0 +1,282 @@
+/* ===== Base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #a5c9e7;
+    font-family: monospace;
+    color: #000;
+    padding: 0;
+}
+
+/* ===== Header (если используется на странице) ===== */
+.header {
+    background-color: #99c2ff;
+    text-align: center;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-size: 18px;
+    color: black;
+    margin: 16px;
+}
+
+.header p {
+    margin: 5px 0;
+}
+
+/* ===== Main container: СТРОГО В КОЛОНКУ (история снизу) ===== */
+.main-container {
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+    max-width: 1100px;
+
+    display: flex;
+    flex-direction: column; /* КЛЮЧЕВО */
+    gap: 18px;
+}
+
+/* ===== Input/Graph block ===== */
+.input-section {
+    background-color: #51c6f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: center;
+    border: 2px solid black;
+}
+
+/* уменьшенный общий размер текста внутри блока ввода */
+.input-section,
+.input-section * {
+    font-size: 16px;
+    font-family: monospace;
+}
+
+/* SVG graph */
+.input-section svg {
+    display: block;
+    margin: 0 auto 14px;
+}
+
+/* shapes on graph (твои классы в svg) */
+.square { fill: #66a3ff; }
+.circle { fill: #66a3ff; }
+.triangle { fill: #66a3ff; }
+
+/* линии графика */
+#graph line {
+    stroke: black;
+}
+
+/* точки результатов */
+.result-point {
+    transition: r 0.15s ease, stroke-width 0.15s ease;
+}
+.result-point:hover {
+    r: 4;
+    stroke-width: 2;
+    cursor: pointer;
+}
+
+/* ===== Labels ===== */
+.vars-label {
+    display: block;
+    font-size: 18px;
+    margin: 8px 0 10px;
+}
+
+/* выбранные значения X/R (outputText) */
+#selected-x,
+#selected-r {
+    display: block;
+    margin: 8px 0 0;
+}
+
+/* ===== X buttons ===== */
+/* контейнер radio */
+.x-vars {
+    display: flex;
+    justify-content: center;
+    gap: 50px;          /* ← БОЛЬШЕ расстояние */
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+/* сам radio */
+.x-vars input[type="radio"] {
+    transform: scale(1.3); /* чуть крупнее точки */
+    cursor: pointer;
+}
+
+
+
+
+.coordinate-button {
+    display: inline-block;
+    padding: 5px 12px;
+    border: 2px solid black;
+    background-color: #cce0ff;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    color: #000;
+}
+
+.coordinate-button:hover {
+    background-color: #99c2ff;
+}
+
+/* ===== Y input ===== */
+.y-vars {
+    display: flex;
+    justify-content: center;
+}
+
+#point-form\\:y-input,
+input.y-input,
+input[id$="y-input"] {
+    border-radius: 7px;
+    padding: 6px 10px;
+    width: 320px;
+    text-align: center;
+    border: 1px solid #000;
+    outline: none;
+    background: #fff;
+    color: #000;
+}
+
+#point-form\\:y-input:focus,
+input[id$="y-input"]:focus {
+    outline: 2px solid #66a3ff;
+}
+
+/* ===== R buttons container (ты используешь r-vars) ===== */
+.r-vars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* ===== Buttons ===== */
+.form-buttons,
+.buttons {
+    display: inline-block;
+    margin: 5px;
+    padding: 6px 12px;
+    border: 2px solid black;
+    background-color: #cce0ff;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 16px;
+    text-decoration: none;
+    color: #000;
+}
+
+.form-buttons:hover,
+.buttons:hover {
+    background-color: #99c2ff;
+}
+
+/* ===== Messages ===== */
+.errors {
+    display: block;
+    margin-top: 10px;
+    color: #b00020;
+    font-family: monospace;
+    text-align: center;
+}
+
+/* ===== Table block (история) ===== */
+.table-block {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+/* JSF dataTable */
+.points-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #99c2ff;
+    margin: 0 auto;
+}
+
+.points-table th,
+.points-table td {
+    border: 2px solid black;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+/* Попадание/промах (у тебя styleClass в outputText) */
+.hit {
+    color: #006400; /* темно-зелёный */
+    font-weight: bold;
+}
+.miss {
+    color: #8b0000; /* темно-красный */
+    font-weight: bold;
+}
+
+/* ===== Link to clock ===== */
+.link-to-clock {
+    text-align: center;
+    margin: 18px 0 22px;
+}
+
+.nav-link {
+    display: inline-block;
+    margin: 5px;
+    padding: 6px 12px;
+    border: 2px solid black;
+    background-color: #cce0ff;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 16px;
+    text-decoration: none;
+    color: #000;
+}
+
+.nav-link:hover {
+    background-color: #99c2ff;
+}
+
+/* ===== Disable old fancy wrap border if present somewhere ===== */
+.wrap::before {
+    display: none !important;
+}
+
+.wrap {
+    position: relative;
+    padding: 3px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.wrap input {
+    position: relative;
+    z-index: 1;
+    border: 1px solid #000;
+    border-radius: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    color: #000;
+    font-size: 15px;
+    outline: none;
+    min-width: 150px;
+}
