@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e738dd5c-a7a0-487b-b854-c6b118eeb5c9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lab1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background-paper-texture.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/background-paper-texture.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab1/assets/background-paper-texture.avif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab1/assets/background-paper-texture.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab1/assets/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab1/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +12,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3JVzfE00pSvon3rQ8QpbAAkdZsU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -38,7 +26,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/oleg/IdeaProjects/ITMO/5-semester-web-programming/lab1",
+    "last_opened_file_path": "C:/Users/oleg/IdeaProjects/ITMO/5-semester-web-programming",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -60,6 +48,9 @@
       <option name="presentableId" value="Default" />
       <updated>1789761124701</updated>
       <workItem from="1789761125881" duration="189000" />
+      <workItem from="1789761808081" duration="14000" />
+      <workItem from="1789761834215" duration="11000" />
+      <workItem from="1789761861463" duration="43000" />
     </task>
     <servers />
   </component>

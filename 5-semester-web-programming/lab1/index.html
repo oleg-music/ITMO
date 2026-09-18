@@ -7,14 +7,23 @@
     <title>Lab 1</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <style>
+        body {
+            background-image: url("assets/background-paper-texture.jfif");
+            font-family: fantasy;
+        }
+
+        table {
+            width: 100%;
+        }
+
         #page-header {
             font-family: fantasy;
             color: black;
-            font-size: 5rem;
+            font-size: 3rem;
             text-align: center;
-            border: 0.35rem solid black;
-            padding: 2rem 2rem 2rem 2rem;
-            margin: 1rem 5rem 5rem 1rem;
+            border: 5px solid black;
+            padding: 20px 20px 20px 20px;
+            margin: 10px 50px 50px 10px;
             position: relative;
             background-color: white;
         }
@@ -22,20 +31,62 @@
         #page-header::before {
             content: "";
             position: absolute;
-            top: 4rem;
-            left: 4rem;
+            top: 40px;
+            left: 40px;
             width: 100%;
             height: 100%;
             background-color: rgb(128, 90, 213);
             z-index: -1;
         }
 
-        table {
-            width: 100%;
+        #point-form {
+            font-size: 1.4rem;
         }
 
-        body {
-            background-image: url("assets/background-paper-texture.jfif");
+        input[type="radio"] {
+            display: none;
+        }
+
+        .x-option {
+            display: inline-block;
+            border: 4px solid black;
+            padding: 10px 16px;
+            margin: 5px;
+            text-align: center;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + .x-option {
+            background-color: rgb(128, 90, 213);
+            color: white;
+        }
+
+        #y {
+            width: 180px;
+            height: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 4px solid black;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+
+        #r {
+            width: 80px;
+            height: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 4px solid black;
+            padding: 3px;
+            background-color: white;
+            margin: 10px;
+        }
+
+        .yr-row {
+            display: flex;
+            gap: 20px;
         }
     </style>
 </head>
@@ -60,7 +111,53 @@
     </tr>
     <tr>
         <td>
-            <div>Форма</div>
+            <form id="point-form">
+                <div>
+                    X:
+                    <input type="radio" id="x-minus-4" name="x" value="-4">
+                    <label class="x-option" for="x-minus-4">-4</label>
+
+                    <input type="radio" id="x-minus-3" name="x" value="-3">
+                    <label class="x-option" for="x-minus-3">-3</label>
+
+                    <input type="radio" id="x-minus-2" name="x" value="-2">
+                    <label class="x-option" for="x-minus-2">-2</label>
+
+                    <input type="radio" id="x-minus-1" name="x" value="-1">
+                    <label class="x-option" for="x-minus-1">-1</label>
+
+                    <input type="radio" id="x-0" name="x" value="0">
+                    <label class="x-option" for="x-0">0</label>
+
+                    <input type="radio" id="x-1" name="x" value="1">
+                    <label class="x-option" for="x-1">1</label>
+
+                    <input type="radio" id="x-2" name="x" value="2">
+                    <label class="x-option" for="x-2">2</label>
+
+                    <input type="radio" id="x-3" name="x" value="3">
+                    <label class="x-option" for="x-3">3</label>
+
+                    <input type="radio" id="x-4" name="x" value="4">
+                    <label class="x-option" for="x-4">4</label>
+                </div>
+                <div class="yr-row">
+                    <div>
+                        Y:
+                        <input type="text" id="y" name="y">
+                    </div>
+                    <div>
+                        R:
+                        <select id="r" name="r">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </td>
     </tr>
 </table>
