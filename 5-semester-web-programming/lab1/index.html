@@ -74,9 +74,11 @@
             margin: 10px;
         }
 
-        #graph {
+        .graph-canvas {
+            display: block;
             background-color: white;
             border: 5px solid black;
+            margin: 10px;
         }
     </style>
 </head>
@@ -91,14 +93,7 @@
             </header>
         </td>
     </tr>
-    <tr>
-        <td>
-            <div id="graphs"></div>
-        </td>
-        <td rowspan="2">
-            <div>История</div>
-        </td>
-    </tr>
+
     <tr>
         <td>
             <form id="point-form">
@@ -144,7 +139,6 @@
 
                             <input type="checkbox" id="r-2" name="r" value="2">
                             <label class="r-option" for="r-2">2</label>
-
                             <input type="checkbox" id="r-3" name="r" value="3">
                             <label class="r-option" for="r-3">3</label>
 
@@ -157,6 +151,14 @@
                     </tr>
                 </table>
             </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="graphs"></div>
+        </td>
+        <td rowspan="2">
+            <div>История</div>
         </td>
     </tr>
 </table>

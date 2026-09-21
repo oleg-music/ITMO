@@ -149,6 +149,7 @@ function createCanvas() {
 
     canvas.width = 500;
     canvas.height = 500;
+    canvas.className = "graph-canvas";
 
     return canvas;
 }
@@ -170,9 +171,18 @@ function redrawGraphs(rValues) {
     });
 }
 
-redrawGraphs([1, 2, 3]);
+redrawGraphs([]);
 
+const rInputs = document.querySelectorAll('input[name="r"]');
 
+rInputs.forEach(input => {
+    input.,"change", () => {
+        const selectedRValues = Array.from(rInputs)
+            .filter(input => input.checked)
+            .map(input => Number(input.value));
 
+        redrawGraphs(selectedRValues);
+    });
+});
 
 
