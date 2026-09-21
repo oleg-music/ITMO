@@ -204,22 +204,25 @@ function clearError() {
     errorBox.classList.remove("error-active");
 }
 
+function isPointInside(x, y, r) {
+    const inRectangle = x >= -r && x <= 0 && y >= -r / 2 && y <= 0;
+    const inCircle = x >= 0 && y >= 0 && x * x + y * y <= r * r;
+    const inTriangle = x >= 0 && y <= 0 && y >= x - r;
+
+    return inRectangle || inCircle || inTriangle;
+}
+
 form.addEventListener("submit", event => {
     event.preventDefault();
     clearError();
 
-    const selectedXInput =
-        document.querySelector('input[name="x"]:checked');
+    const selectedXInput = document.querySelector('input[name="x"]:checked');
 
-    const yInput =
-        document.getElementById("y");
+    const yInput = document.getElementById("y");
 
-    const selectedRInputs =
-        document.querySelectorAll('input[name="r"]:checked');
+    const selectedRInputs = document.querySelectorAll('input[name="r"]:checked');
 
-    const x = selectedXInput === null
-        ? null
-        : Number(selectedXInput.value);
+    const x = selectedXInput === null ? null : Number(selectedXInput.value);
 
     const yText = yInput.value.trim();
 
@@ -253,9 +256,16 @@ form.addEventListener("submit", event => {
         return;
     }
 
-    console.log(x);
-    console.log(yText);
-    console.log(rValues);
+    const results = rValues.map(r => {
+        return {
+            x,
+            y,
+            r,
+            hit: isPointInside(x, y, r)
+        };
+    });
+
+    console.log(results);
 });
 
 
