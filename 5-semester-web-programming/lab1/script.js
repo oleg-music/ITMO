@@ -1,10 +1,4 @@
 const graphsContainer = document.getElementById("graphs");
-const canvas = document.createElement("canvas");
-canvas.width = 500;
-canvas.height = 500;
-graphsContainer.appendChild(canvas);
-
-
 
 const rScale = 150;
 const halfRScale = rScale / 2;
@@ -150,7 +144,33 @@ function drawLabels(context, centerX, centerY, rValue) {
     context.fillText(negativeRLabel, centerX + 10, centerY + rScale);
 }
 
-drawGraph(canvas);
+function createCanvas() {
+    const canvas = document.createElement("canvas");
+
+    canvas.width = 500;
+    canvas.height = 500;
+
+    return canvas;
+}
+
+function redrawGraphs(rValues) {
+    graphsContainer.innerHTML = "";
+
+    if (rValues.length === 0) {
+        const canvas = createCanvas();
+        graphsContainer.appendChild(canvas);
+        drawGraph(canvas, null);
+        return;
+    }
+
+    rValues.forEach(rValue => {
+        const canvas = createCanvas();
+        graphsContainer.appendChild(canvas);
+        drawGraph(canvas, rValue);
+    });
+}
+
+redrawGraphs([1, 2, 3]);
 
 
 
