@@ -236,6 +236,23 @@ form.addEventListener("submit", event => {
         return;
     }
 
+    if (yText === "") {
+        showError("Введите значение Y");
+        return;
+    }
+
+    if (!/^-?\d+([.,]\d+)?$/.test(yText)) {
+        showError("Y должен быть числом");
+        return;
+    }
+
+    const y = Number(yText.replace(",", "."));
+
+    if (y <= -5 || y >= 3) {
+        showError("Y должен находиться в диапазоне (-5; 3)");
+        return;
+    }
+
     console.log(x);
     console.log(yText);
     console.log(rValues);
