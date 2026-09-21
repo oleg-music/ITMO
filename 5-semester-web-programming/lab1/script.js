@@ -188,6 +188,7 @@ rInputs.forEach(input => {
 // Очистка графиков при нажатии кнопки сброса данных
 const form = document.getElementById("point-form");
 const errorBox = document.getElementById("form-error");
+const resultsBody = document.getElementById("results-body");
 
 form.addEventListener("reset", () => {
     clearError();
@@ -210,6 +211,24 @@ function isPointInside(x, y, r) {
     const inTriangle = x >= 0 && y <= 0 && y >= x - r;
 
     return inRectangle || inCircle || inTriangle;
+}
+
+function formatDate(timestamp) {
+    return new Date(timestamp).toLocaleString("ru-RU");
+}
+
+function addResultRow(result) {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${result.x}</td>
+        <td>${result.y}</td>
+        <td>${result.r}</td>
+        <td>${result.hit ? "Попадание" : "Промах"}</td>
+        <td>${formatDate(result.timestamp)}</td>
+    `;
+
+    resultsBody.appendChild(row);
 }
 
 form.addEventListener("submit", event => {
@@ -256,16 +275,23 @@ form.addEventListener("submit", event => {
         return;
     }
 
+    const timestamp = Date.now();
+
     const results = rValues.map(r => {
         return {
             x,
             y,
             r,
-            hit: isPointInside(x, y, r)
+            hit: isPointInside(x, y, r),
+            timestamp
         };
     });
 
-    console.log(results);
+    results.forEach(result => {
+        addResultRow(result);
+    });
+
+    form.reset();
 });
 
 
