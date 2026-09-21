@@ -185,4 +185,40 @@ rInputs.forEach(input => {
     });
 });
 
+// Очистка графиков при нажатии кнопки сброса данных
+const form = document.getElementById("point-form");
+
+form.addEventListener("reset", () => {
+    redrawGraphs([]);
+});
+
+form.addEventListener("submit", event => {
+    event.preventDefault();
+});
+
+form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const selectedXInput =
+        document.querySelector('input[name="x"]:checked');
+
+    const yInput =
+        document.getElementById("y");
+
+    const selectedRInputs =
+        document.querySelectorAll('input[name="r"]:checked');
+
+    const x = selectedXInput === null
+        ? null
+        : Number(selectedXInput.value);
+
+    const yText = yInput.value.trim();
+
+    const rValues = Array.from(selectedRInputs)
+        .map(input => Number(input.value));
+
+    console.log(x);
+    console.log(yText);
+    console.log(rValues);
+});
 
