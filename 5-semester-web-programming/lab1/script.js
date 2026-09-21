@@ -1,8 +1,10 @@
-const canvas = document.getElementById("graph");
-const context = canvas.getContext("2d");
+const graphsContainer = document.getElementById("graphs");
+const canvas = document.createElement("canvas");
+canvas.width = 500;
+canvas.height = 500;
+graphsContainer.appendChild(canvas);
 
-const centerX = canvas.width / 2;
-const centerY = canvas.height / 2;
+
 
 const rScale = 150;
 const halfRScale = rScale / 2;
@@ -11,15 +13,20 @@ const tickLength = 10;
 const halfTickLength = tickLength / 2;
 
 
-function drawGraph(rValue = null) {
+function drawGraph(canvas, rValue = null) {
+    const context = canvas.getContext("2d");
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
     context.clearRect(0, 0, canvas.width, canvas.height);
-    drawArea();
-    drawAxes();
-    drawTicks();
-    drawLabels(rValue);
+    drawArea(context, centerX, centerY);
+    drawAxes(context, centerX, centerY);
+    drawTicks(context, centerX, centerY);
+    drawLabels(context, centerX, centerY, rValue);
 }
 
-function drawArea() {
+function drawArea(context, centerX, centerY) {
     context.fillStyle = "rgba(128, 90, 213, 0.75)";
 
     // Прямоугольник
@@ -40,7 +47,7 @@ function drawArea() {
     context.fill();
 }
 
-function drawAxes() {
+function drawAxes(context, centerX, centerY) {
     context.lineWidth = 2;
 
     // Ось Y
@@ -74,7 +81,7 @@ function drawAxes() {
     context.stroke();
 }
 
-function drawTicks() {
+function drawTicks(context, centerX, centerY) {
     // Засечки на оси X
     context.beginPath();
 
@@ -110,7 +117,7 @@ function drawTicks() {
     context.stroke();
 }
 
-function drawLabels(rValue) {
+function drawLabels(context, centerX, centerY, rValue) {
     const rLabel = rValue === null ? "R" : String(rValue);
     const halfRLabel = rValue === null ? "R/2" : String(rValue / 2);
     const negativeHalfRLabel = rValue === null ? "-R/2" : String(-rValue / 2);
@@ -136,14 +143,15 @@ function drawLabels(rValue) {
     context.fillText(negativeRLabel, centerX - rScale, centerY - 5);
 
     context.textAlign = "left";
-    context.textBaseline = "center";
-    context.fillText(rLabel, centerX + 10, centerY - rScale + 15);
-    context.fillText(halfRLabel, centerX + 10, centerY - halfRScale + 15);
-    context.fillText(negativeHalfRLabel, centerX + 10, centerY + halfRScale + 15);
-    context.fillText(negativeRLabel, centerX + 10, centerY + rScale + 15);
+    context.textBaseline = "middle";
+    context.fillText(rLabel, centerX + 10, centerY - rScale);
+    context.fillText(halfRLabel, centerX + 10, centerY - halfRScale);
+    context.fillText(negativeHalfRLabel, centerX + 10, centerY + halfRScale);
+    context.fillText(negativeRLabel, centerX + 10, centerY + rScale);
 }
 
-drawGraph();
+drawGraph(canvas);
+
 
 
 
