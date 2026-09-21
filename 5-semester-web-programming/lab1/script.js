@@ -187,17 +187,26 @@ rInputs.forEach(input => {
 
 // Очистка графиков при нажатии кнопки сброса данных
 const form = document.getElementById("point-form");
+const errorBox = document.getElementById("form-error");
 
 form.addEventListener("reset", () => {
+    clearError();
     redrawGraphs([]);
 });
 
-form.addEventListener("submit", event => {
-    event.preventDefault();
-});
+function showError(message) {
+    errorBox.textContent = message;
+    errorBox.classList.add("error-active");
+}
+
+function clearError() {
+    errorBox.textContent = "Тут будут сообщения об ошибках...";
+    errorBox.classList.remove("error-active");
+}
 
 form.addEventListener("submit", event => {
     event.preventDefault();
+    clearError();
 
     const selectedXInput =
         document.querySelector('input[name="x"]:checked');
@@ -217,8 +226,20 @@ form.addEventListener("submit", event => {
     const rValues = Array.from(selectedRInputs)
         .map(input => Number(input.value));
 
+    if (x === null) {
+        showError("Выберите значение X");
+        return;
+    }
+
+    if (rValues.length === 0) {
+        showError("Выберите хотя бы одно значение R");
+        return;
+    }
+
     console.log(x);
     console.log(yText);
     console.log(rValues);
 });
+
+
 

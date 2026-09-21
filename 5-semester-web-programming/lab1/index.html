@@ -97,6 +97,27 @@
             color: white;
         }
 
+        .form-actions {
+            display: inline-block;
+        }
+
+        #form-error {
+            margin-top: 10px;
+            padding: 10px;
+
+            background-color: white;
+            border: 4px solid black;
+            box-sizing: border-box;
+            width: 100%;
+
+            font-weight: normal;
+        }
+
+        #form-error.error-active {
+            background-color: rgb(128, 90, 213);
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -168,8 +189,14 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <button type="submit">Отправить данные</button>
-                            <button type="reset">Сбросить данные</button>
+                            <div class="form-actions">
+                                <div>
+                                    <button type="submit">Отправить данные</button>
+                                    <button type="reset">Сбросить данные</button>
+                                </div>
+
+                                <div id="form-error" >Тут будут сообщения об ошибках...</div>
+                            </div>
                         </td>
                     </tr>
                 </table>
