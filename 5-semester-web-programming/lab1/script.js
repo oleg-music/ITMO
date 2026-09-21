@@ -176,7 +176,7 @@ redrawGraphs([]);
 const rInputs = document.querySelectorAll('input[name="r"]');
 
 rInputs.forEach(input => {
-    input.,"change", () => {
+    input.addEventListener("change", () => {
         const selectedRValues = Array.from(rInputs)
             .filter(input => input.checked)
             .map(input => Number(input.value));
