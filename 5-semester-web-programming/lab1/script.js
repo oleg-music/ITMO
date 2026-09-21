@@ -1,23 +1,25 @@
-function drawGraph(rValue) {
+const canvas = document.getElementById("graph");
+const context = canvas.getContext("2d");
+
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+
+const rScale = 150;
+const halfRScale = rScale / 2;
+
+const tickLength = 10;
+const halfTickLength = tickLength / 2;
+
+
+function drawGraph(rValue = null) {
     context.clearRect(0, 0, canvas.width, canvas.height);
+    drawArea();
+    drawAxes();
+    drawTicks();
+    drawLabels(rValue);
+}
 
-    const canvas = document.getElementById("graph");
-    const context = canvas.getContext("2d");
-
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-
-    const rScale = 150;
-    const halfRScale = rScale / 2;
-
-    const tickLength = 10;
-    const halfTickLength = tickLength / 2;
-
-    context.lineWidth = 2;
-
-    //
-    // Заливка фигур области
-    //
+function drawArea() {
     context.fillStyle = "rgba(128, 90, 213, 0.75)";
 
     // Прямоугольник
@@ -33,10 +35,13 @@ function drawGraph(rValue) {
     // Треугольник
     context.beginPath();
     context.moveTo(centerX, centerY);
-    context.lineTo(centerX, centerY);
     context.lineTo(centerX + rScale, centerY);
     context.lineTo(centerX, centerY + rScale);
     context.fill();
+}
+
+function drawAxes() {
+    context.lineWidth = 2;
 
     // Ось Y
     context.beginPath();
@@ -67,7 +72,9 @@ function drawGraph(rValue) {
     context.moveTo(450, centerY);
     context.lineTo(440, centerY + 5);
     context.stroke();
+}
 
+function drawTicks() {
     // Засечки на оси X
     context.beginPath();
 
@@ -101,6 +108,13 @@ function drawGraph(rValue) {
     context.lineTo(centerX + halfTickLength, centerY + rScale);
 
     context.stroke();
+}
+
+function drawLabels(rValue) {
+    const rLabel = rValue === null ? "R" : String(rValue);
+    const halfRLabel = rValue === null ? "R/2" : String(rValue / 2);
+    const negativeHalfRLabel = rValue === null ? "-R/2" : String(-rValue / 2);
+    const negativeRLabel = rValue === null ? "-R" : String(-rValue);
 
     // Подписи к осям
 
@@ -116,18 +130,20 @@ function drawGraph(rValue) {
     context.fillText("Y", centerX + 20, 45);
 
     context.textBaseline = "bottom";
-    context.fillText(String(rValue), centerX + rScale, centerY - 5);
-    context.fillText(String(rValue / 2), centerX + halfRScale, centerY - 5);
-    context.fillText(String(-rValue / 2), centerX - halfRScale, centerY - 5);
-    context.fillText(String(-rValue), centerX - rScale, centerY - 5);
+    context.fillText(rLabel, centerX + rScale, centerY - 5);
+    context.fillText(halfRLabel, centerX + halfRScale, centerY - 5);
+    context.fillText(negativeHalfRLabel, centerX - halfRScale, centerY - 5);
+    context.fillText(negativeRLabel, centerX - rScale, centerY - 5);
 
     context.textAlign = "left";
     context.textBaseline = "center";
-    context.fillText(String(rValue), centerX + 10, centerY - rScale + 15);
-    context.fillText(String(rValue / 2), centerX + 10, centerY - halfRScale + 15);
-    context.fillText(String(-rValue / 2), centerX + 10, centerY + halfRScale + 15);
-    context.fillText(String(-rValue), centerX + 10, centerY + rScale + 15);
+    context.fillText(rLabel, centerX + 10, centerY - rScale + 15);
+    context.fillText(halfRLabel, centerX + 10, centerY - halfRScale + 15);
+    context.fillText(negativeHalfRLabel, centerX + 10, centerY + halfRScale + 15);
+    context.fillText(negativeRLabel, centerX + 10, centerY + rScale + 15);
 }
+
+drawGraph();
 
 
 
