@@ -189,6 +189,7 @@ rInputs.forEach(input => {
 const form = document.getElementById("point-form");
 const errorBox = document.getElementById("form-error");
 const resultsBody = document.getElementById("results-body");
+const STORAGE_KEY = "results";
 
 form.addEventListener("reset", () => {
     clearError();
@@ -230,6 +231,29 @@ function addResultRow(result) {
 
     resultsBody.appendChild(row);
 }
+
+function saveResults(results) {
+    const savedResults =
+        JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    savedResults.push(...results);
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(savedResults)
+    );
+}
+
+function loadResults() {
+    const savedResults =
+        JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    savedResults.forEach(result => {
+        addResultRow(result);
+    });
+}
+
+loadResults();
 
 form.addEventListener("submit", event => {
     event.preventDefault();
@@ -290,6 +314,8 @@ form.addEventListener("submit", event => {
     results.forEach(result => {
         addResultRow(result);
     });
+
+    saveResults(results);
 
     form.reset();
 });
