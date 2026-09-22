@@ -185,7 +185,6 @@ rInputs.forEach(input => {
     });
 });
 
-// Очистка графиков при нажатии кнопки сброса данных
 const form = document.getElementById("point-form");
 const errorBox = document.getElementById("form-error");
 const resultsBody = document.getElementById("results-body");

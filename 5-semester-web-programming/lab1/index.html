@@ -41,7 +41,7 @@
             font-size: 3rem;
             text-align: center;
             border: 5px solid black;
-            padding: 20px 20px 20px 20px;
+            padding: 20px;
             margin: 20px 60px 50px 20px;
             position: relative;
             background-color: white;
@@ -95,9 +95,17 @@
 
         .graph-canvas {
             display: block;
+
+            width: 500px;
+            height: 500px;
+
+            padding-left: calc((100% - 508px) / 2);
+            padding-right: calc((100% - 508px) / 2);
+
             background-color: white;
             border: 5px solid black;
-            margin: 0 0 20px 20px;
+
+            margin-top: 20px;
         }
 
         button {
@@ -108,6 +116,7 @@
             font-weight: bold;
             padding: 10px;
             border: 4px solid black;
+            width: 100%;
         }
 
         button:active {
@@ -116,22 +125,11 @@
             color: white;
         }
 
-        button:first-child {
-            margin-right: 5px;
-        }
-
-        .form-actions {
-            display: inline-block;
-        }
-
         #form-error {
-            margin-top: 10px;
             padding: 10px;
 
             background-color: white;
             border: 4px solid black;
-            box-sizing: border-box;
-            width: 100%;
 
             font-weight: normal;
         }
@@ -144,7 +142,7 @@
 
         #results-table {
             width: calc(100% - 40px);
-            margin: 20px 20px 20px 20px;
+            margin: 20px;
 
             border-collapse: collapse;
             background-color: white;
@@ -162,16 +160,13 @@
         #results-table th {
             background-color: rgb(128, 90, 213);
             color: white;
-            font-size: 1.4rem;
         }
 
         #clear-results {
-            display: block;
             width: calc(100% - 40px);
             margin: 0 20px 20px 20px;
             box-sizing: border-box;
         }
-
     </style>
 </head>
 <body>
@@ -189,36 +184,38 @@
     <tr>
         <td class="left-column">
             <form id="point-form">
-                <div>
-                    X:
-                    <input type="radio" id="x-minus-4" name="x" value="-4">
-                    <label class="x-option" for="x-minus-4">-4</label>
-
-                    <input type="radio" id="x-minus-3" name="x" value="-3">
-                    <label class="x-option" for="x-minus-3">-3</label>
-
-                    <input type="radio" id="x-minus-2" name="x" value="-2">
-                    <label class="x-option" for="x-minus-2">-2</label>
-
-                    <input type="radio" id="x-minus-1" name="x" value="-1">
-                    <label class="x-option" for="x-minus-1">-1</label>
-
-                    <input type="radio" id="x-0" name="x" value="0">
-                    <label class="x-option" for="x-0">0</label>
-
-                    <input type="radio" id="x-1" name="x" value="1">
-                    <label class="x-option" for="x-1">1</label>
-
-                    <input type="radio" id="x-2" name="x" value="2">
-                    <label class="x-option" for="x-2">2</label>
-
-                    <input type="radio" id="x-3" name="x" value="3">
-                    <label class="x-option" for="x-3">3</label>
-
-                    <input type="radio" id="x-4" name="x" value="4">
-                    <label class="x-option" for="x-4">4</label>
-                </div>
                 <table>
+                    <tr>
+                        <td colspan="2">
+                            X:
+                            <input type="radio" id="x-minus-4" name="x" value="-4">
+                            <label class="x-option" for="x-minus-4">-4</label>
+
+                            <input type="radio" id="x-minus-3" name="x" value="-3">
+                            <label class="x-option" for="x-minus-3">-3</label>
+
+                            <input type="radio" id="x-minus-2" name="x" value="-2">
+                            <label class="x-option" for="x-minus-2">-2</label>
+
+                            <input type="radio" id="x-minus-1" name="x" value="-1">
+                            <label class="x-option" for="x-minus-1">-1</label>
+
+                            <input type="radio" id="x-0" name="x" value="0">
+                            <label class="x-option" for="x-0">0</label>
+
+                            <input type="radio" id="x-1" name="x" value="1">
+                            <label class="x-option" for="x-1">1</label>
+
+                            <input type="radio" id="x-2" name="x" value="2">
+                            <label class="x-option" for="x-2">2</label>
+
+                            <input type="radio" id="x-3" name="x" value="3">
+                            <label class="x-option" for="x-3">3</label>
+
+                            <input type="radio" id="x-4" name="x" value="4">
+                            <label class="x-option" for="x-4">4</label>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             Y:
@@ -242,21 +239,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <div class="form-actions">
-                                <div>
-                                    <button type="submit">Отправить данные</button>
-                                    <button type="reset">Сбросить данные</button>
-                                </div>
-                                <div id="form-error">Тут будут сообщения об ошибках...</div>
-                            </div>
+                        <td>
+                            <button type="submit">Отправить данные</button>
                         </td>
+                        <td>
+                            <button type="reset">Сбросить данные</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="form-error">
+                            Тут будут сообщения об ошибках...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="graphs"></td>
                     </tr>
                 </table>
             </form>
-            <div id="graphs"></div>
         </td>
-        <td class="right-column" rowspan="2">
+        <td class="right-column">
             <table id="results-table">
                 <thead>
                 <tr>
