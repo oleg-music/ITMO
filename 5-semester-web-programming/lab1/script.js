@@ -189,11 +189,17 @@ rInputs.forEach(input => {
 const form = document.getElementById("point-form");
 const errorBox = document.getElementById("form-error");
 const resultsBody = document.getElementById("results-body");
+const clearResultsButton = document.getElementById("clear-results");
 const STORAGE_KEY = "results";
 
 form.addEventListener("reset", () => {
     clearError();
     redrawGraphs([]);
+});
+
+clearResultsButton.addEventListener("click", () => {
+    resultsBody.innerHTML = "";
+    localStorage.removeItem(STORAGE_KEY);
 });
 
 function showError(message) {
