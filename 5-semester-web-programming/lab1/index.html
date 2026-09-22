@@ -122,6 +122,12 @@
             color: white;
             font-weight: bold;
         }
+
+        .left-column,
+        .right-column {
+            width: 50%;
+            vertical-align: top;
+        }
     </style>
 </head>
 <body>
@@ -137,7 +143,7 @@
     </tr>
 
     <tr>
-        <td>
+        <td class="left-column">
             <form id="point-form">
                 <div>
                     X:
@@ -199,19 +205,14 @@
                                     <button type="reset">Сбросить данные</button>
                                 </div>
 
-                                <div id="form-error" >Тут будут сообщения об ошибках...</div>
+                                <div id="form-error">Тут будут сообщения об ошибках...</div>
                             </div>
                         </td>
                     </tr>
                 </table>
             </form>
         </td>
-    </tr>
-    <tr>
-        <td>
-            <div id="graphs"></div>
-        </td>
-        <td>
+        <td class="right-column" rowspan="2">
             <div>История</div>
 
             <table id="results-table">
@@ -230,6 +231,12 @@
             </table>
         </td>
     </tr>
+    <tr>
+        <td>
+            <div id="graphs"></div>
+        </td>
+    </tr>
+
 </table>
 <script src="script.js"></script>
 </body>
