@@ -216,7 +216,7 @@ form.addEventListener("reset", () => {
         button.classList.remove("selected");
     });
 
-    // redrawGraphs([], null, null);
+    redrawGraphs([], null, null);
 });
 
 clearResultsButton.addEventListener("click", () => {
@@ -312,13 +312,13 @@ form.addEventListener("submit", event => {
         return;
     }
 
-    if (!/^-?\d+([.,]\d+)?$/.test(rText)) {
-        showError("R должен быть числом");
+    if (rText === "") {
+        showError("Введите значение R");
         return;
     }
 
-    if (rText === "") {
-        showError("Введите значение R");
+    if (!/^-?\d+([.,]\d+)?$/.test(rText)) {
+        showError("R должен быть числом");
         return;
     }
 
