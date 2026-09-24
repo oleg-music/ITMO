@@ -7,12 +7,7 @@ const tickLength = 10;
 const halfTickLength = tickLength / 2;
 
 
-function drawGraph(
-    canvas,
-    xValue = null,
-    yValue = null,
-    rValue = null
-) {
+function drawGraph(canvas, xValue = null, yValue = null, rValue = null) {
     const context = canvas.getContext("2d");
 
     const centerX = canvas.width / 2;
@@ -25,14 +20,7 @@ function drawGraph(
     drawLabels(context, centerX, centerY, rValue);
 
     if (xValue !== null && yValue !== null && rValue !== null) {
-        drawPoint(
-            context,
-            centerX,
-            centerY,
-            xValue,
-            yValue,
-            rValue
-        );
+        drawPoint(context, centerX, centerY, xValue, yValue, rValue);
     }
 }
 
@@ -45,15 +33,16 @@ function drawArea(context, centerX, centerY) {
     // Четверть круга
     context.beginPath();
     context.moveTo(centerX, centerY);
-    context.arc(centerX, centerY, rScale, -Math.PI / 2, 0);
+    context.arc(centerX, centerY, halfRScale, Math.PI, 3 * Math.PI / 2);
     context.lineTo(centerX, centerY);
     context.fill();
 
     // Треугольник
     context.beginPath();
     context.moveTo(centerX, centerY);
-    context.lineTo(centerX + rScale, centerY);
+    context.lineTo(centerX + halfRScale, centerY);
     context.lineTo(centerX, centerY + rScale);
+    context.closePath();
     context.fill();
 }
 
@@ -241,8 +230,10 @@ function clearError() {
 
 function isPointInside(x, y, r) {
     const inRectangle = x >= -r && x <= 0 && y >= -r / 2 && y <= 0;
-    const inCircle = x >= 0 && y >= 0 && x * x + y * y <= r * r;
-    const inTriangle = x >= 0 && y <= 0 && y >= x - r;
+
+    const inCircle = x <= 0 && y >= 0 && x * x + y * y <= (r / 2) * (r / 2);
+
+    const inTriangle = x >= 0 && y <= 0 && y >= 2 * x - r;
 
     return inRectangle || inCircle || inTriangle;
 }
@@ -266,20 +257,15 @@ function addResultRow(result) {
 }
 
 function saveResults(results) {
-    const savedResults =
-        JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const savedResults = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
     savedResults.push(...results);
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(savedResults)
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedResults));
 }
 
 function loadResults() {
-    const savedResults =
-        JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const savedResults = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
     savedResults.forEach(result => {
         addResultRow(result);
@@ -292,8 +278,7 @@ form.addEventListener("submit", event => {
     event.preventDefault();
     clearError();
 
-    const selectedXButtons =
-        document.querySelectorAll(".x-option.selected");
+    const selectedXButtons = document.querySelectorAll(".x-option.selected");
 
     const yInput = document.getElementById("y");
 
@@ -351,11 +336,7 @@ form.addEventListener("submit", event => {
 
     const results = xValues.map(x => {
         return {
-            x,
-            y,
-            r,
-            hit: isPointInside(x, y, r),
-            timestamp
+            x, y, r, hit: isPointInside(x, y, r), timestamp
         };
     });
 
