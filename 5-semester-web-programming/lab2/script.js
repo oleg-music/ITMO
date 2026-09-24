@@ -335,8 +335,8 @@ form.addEventListener("submit", event => {
 
     const r = Number(rText.replace(",", "."));
 
-    if (y <= -5 || y >= 3) {
-        showError("Y должен находиться в диапазоне (-5; 3)");
+    if (y <= -3 || y >= 3) {
+        showError("Y должен находиться в диапазоне (-3; 3)");
         return;
     }
 
