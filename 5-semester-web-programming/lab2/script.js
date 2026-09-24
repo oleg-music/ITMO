@@ -116,11 +116,15 @@ function drawTicks(context, centerX, centerY) {
     context.stroke();
 }
 
+function formatGraphNumber(value) {
+    return Number(value.toFixed(2)).toString();
+}
+
 function drawLabels(context, centerX, centerY, rValue) {
-    const rLabel = rValue === null ? "R" : String(rValue);
-    const halfRLabel = rValue === null ? "R/2" : String(rValue / 2);
-    const negativeHalfRLabel = rValue === null ? "-R/2" : String(-rValue / 2);
-    const negativeRLabel = rValue === null ? "-R" : String(-rValue);
+    const rLabel = rValue === null ? "R" : formatGraphNumber(rValue);
+    const halfRLabel = rValue === null ? "R/2" : formatGraphNumber(rValue / 2);
+    const negativeHalfRLabel = rValue === null ? "-R/2" : formatGraphNumber(-rValue / 2);
+    const negativeRLabel = rValue === null ? "-R" : formatGraphNumber(-rValue);
 
     // Подписи к осям
 
