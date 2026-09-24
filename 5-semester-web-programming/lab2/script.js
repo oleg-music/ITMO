@@ -7,7 +7,12 @@ const tickLength = 10;
 const halfTickLength = tickLength / 2;
 
 
-function drawGraph(canvas, rValue = null) {
+function drawGraph(
+    canvas,
+    xValue = null,
+    yValue = null,
+    rValue = null
+) {
     const context = canvas.getContext("2d");
 
     const centerX = canvas.width / 2;
@@ -18,6 +23,17 @@ function drawGraph(canvas, rValue = null) {
     drawAxes(context, centerX, centerY);
     drawTicks(context, centerX, centerY);
     drawLabels(context, centerX, centerY, rValue);
+
+    if (xValue !== null && yValue !== null && rValue !== null) {
+        drawPoint(
+            context,
+            centerX,
+            centerY,
+            xValue,
+            yValue,
+            rValue
+        );
+    }
 }
 
 function drawArea(context, centerX, centerY) {
@@ -144,6 +160,18 @@ function drawLabels(context, centerX, centerY, rValue) {
     context.fillText(negativeRLabel, centerX + 10, centerY + rScale);
 }
 
+function drawPoint(context, centerX, centerY, xValue, yValue, rValue) {
+    const scale = rScale / rValue;
+
+    const pixelX = centerX + xValue * scale;
+    const pixelY = centerY - yValue * scale;
+
+    context.beginPath();
+    context.arc(pixelX, pixelY, 5, 0, Math.PI * 2);
+    context.fillStyle = "black";
+    context.fill();
+}
+
 function createCanvas() {
     const canvas = document.createElement("canvas");
 
@@ -154,36 +182,25 @@ function createCanvas() {
     return canvas;
 }
 
-function redrawGraphs(rValues) {
+function redrawGraphs(xValues, yValue, rValue) {
     graphsContainer.innerHTML = "";
 
-    if (rValues.length === 0) {
+    if (xValues.length === 0) {
         const canvas = createCanvas();
         graphsContainer.appendChild(canvas);
-        drawGraph(canvas, null);
+        drawGraph(canvas, null, null);
         return;
     }
 
-    rValues.forEach(rValue => {
+    xValues.forEach(x => {
         const canvas = createCanvas();
         graphsContainer.appendChild(canvas);
-        drawGraph(canvas, rValue);
+
+        drawGraph(canvas, x, yValue, rValue);
     });
 }
 
-redrawGraphs([]);
-
-const rInputs = document.querySelectorAll('input[name="r"]');
-
-rInputs.forEach(input => {
-    input.addEventListener("change", () => {
-        const selectedRValues = Array.from(rInputs)
-            .filter(input => input.checked)
-            .map(input => Number(input.value));
-
-        redrawGraphs(selectedRValues);
-    });
-});
+redrawGraphs([], null, null);
 
 const form = document.getElementById("point-form");
 const errorBox = document.getElementById("form-error");
@@ -192,24 +209,15 @@ const clearResultsButton = document.getElementById("clear-results");
 const STORAGE_KEY = "results";
 const xButtons = document.querySelectorAll('input[name="x"]');
 
-let selectedX = null;
 
 xButtons.forEach(button => {
     button.addEventListener("click", () => {
-        xButtons.forEach(btn => {
-            btn.classList.remove("selected");
-        });
-
-        button.classList.add("selected");
-
-        selectedX = Number(button.value);
+        button.classList.toggle("selected");
     });
 });
+
 form.addEventListener("reset", () => {
     clearError();
-    redrawGraphs([]);
-
-    selectedX = null;
 
     xButtons.forEach(button => {
         button.classList.remove("selected");
@@ -284,24 +292,22 @@ form.addEventListener("submit", event => {
     event.preventDefault();
     clearError();
 
-    const x = selectedX;
+    const selectedXButtons =
+        document.querySelectorAll(".x-option.selected");
 
     const yInput = document.getElementById("y");
 
-    const selectedRInputs = document.querySelectorAll('input[name="r"]:checked');
-
     const yText = yInput.value.trim();
 
-    const rValues = Array.from(selectedRInputs)
-        .map(input => Number(input.value));
+    const rInput = document.getElementById("r");
 
-    if (x === null) {
-        showError("Выберите значение X");
-        return;
-    }
+    const rText = rInput.value.trim();
 
-    if (rValues.length === 0) {
-        showError("Выберите хотя бы одно значение R");
+    const xValues = Array.from(selectedXButtons)
+        .map(button => Number(button.value));
+
+    if (xValues.length === 0) {
+        showError("Выберите хотя бы одно значение X");
         return;
     }
 
@@ -315,16 +321,35 @@ form.addEventListener("submit", event => {
         return;
     }
 
+    if (!/^-?\d+([.,]\d+)?$/.test(rText)) {
+        showError("R должен быть числом");
+        return;
+    }
+
+    if (rText === "") {
+        showError("Введите значение R");
+        return;
+    }
+
     const y = Number(yText.replace(",", "."));
+
+    const r = Number(rText.replace(",", "."));
 
     if (y <= -5 || y >= 3) {
         showError("Y должен находиться в диапазоне (-5; 3)");
         return;
     }
 
+    if (r <= 1 || r >= 4) {
+        showError("R должен находиться в диапазоне (1; 4)");
+        return;
+    }
+
+    redrawGraphs(xValues, y, r);
+
     const timestamp = Date.now();
 
-    const results = rValues.map(r => {
+    const results = xValues.map(x => {
         return {
             x,
             y,
