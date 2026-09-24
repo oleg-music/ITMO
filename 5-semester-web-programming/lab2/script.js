@@ -211,6 +211,8 @@ form.addEventListener("reset", () => {
     xButtons.forEach(button => {
         button.classList.remove("selected");
     });
+
+    // redrawGraphs([], null, null);
 });
 
 clearResultsButton.addEventListener("click", () => {
@@ -330,8 +332,6 @@ form.addEventListener("submit", event => {
         return;
     }
 
-    redrawGraphs(xValues, y, r);
-
     const timestamp = Date.now();
 
     const results = xValues.map(x => {
@@ -347,6 +347,8 @@ form.addEventListener("submit", event => {
     saveResults(results);
 
     form.reset();
+
+    redrawGraphs(xValues, y, r);
 });
 
 
