@@ -190,10 +190,30 @@ const errorBox = document.getElementById("form-error");
 const resultsBody = document.getElementById("results-body");
 const clearResultsButton = document.getElementById("clear-results");
 const STORAGE_KEY = "results";
+const xButtons = document.querySelectorAll('input[name="x"]');
 
+let selectedX = null;
+
+xButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        xButtons.forEach(btn => {
+            btn.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+
+        selectedX = Number(button.value);
+    });
+});
 form.addEventListener("reset", () => {
     clearError();
     redrawGraphs([]);
+
+    selectedX = null;
+
+    xButtons.forEach(button => {
+        button.classList.remove("selected");
+    });
 });
 
 clearResultsButton.addEventListener("click", () => {
@@ -264,13 +284,11 @@ form.addEventListener("submit", event => {
     event.preventDefault();
     clearError();
 
-    const selectedXInput = document.querySelector('input[name="x"]:checked');
+    const x = selectedX;
 
     const yInput = document.getElementById("y");
 
     const selectedRInputs = document.querySelectorAll('input[name="r"]:checked');
-
-    const x = selectedXInput === null ? null : Number(selectedXInput.value);
 
     const yText = yInput.value.trim();
 
