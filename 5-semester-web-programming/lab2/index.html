@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Lab 1</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <style>
+        body {
+            background-image: url("assets/background-paper-texture.jfif");
+            font-family: fantasy;
+            font-weight: bold;
+        }
+
+        #page-layout {
+            width: 100%;
+        }
+
+        #results-table {
+            width: 100%;
+        }
+
+        .left-column {
+            width: 45%;
+            vertical-align: top;
+        }
+
+        .right-column {
+            width: 55%;
+            vertical-align: top;
+        }
+
+        #page-header > div {
+            line-height: 1.2;
+        }
+
+        #page-header {
+            font-family: fantasy;
+            color: black;
+            font-size: 3rem;
+            text-align: center;
+            border: 5px solid black;
+            padding: 20px;
+            margin: 20px 60px 50px 20px;
+            position: relative;
+            background-color: white;
+        }
+
+        #page-header::before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(128, 90, 213);
+            z-index: -1;
+        }
+
+        #point-form {
+            font-size: 1.4rem;
+            margin: 20px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            display: none;
+        }
+
+        .x-option, .r-option {
+            display: inline-block;
+            border: 4px solid black;
+            padding: 10px 16px;
+            margin: 5px;
+            text-align: center;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + .x-option, input[type="checkbox"]:checked + .r-option {
+            background-color: rgb(128, 90, 213);
+            color: white;
+        }
+
+        #y {
+            width: 180px;
+            height: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 4px solid black;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+
+        .graph-canvas {
+            display: block;
+
+            width: 500px;
+            height: 500px;
+
+            padding-left: calc((100% - 508px) / 2);
+            padding-right: calc((100% - 508px) / 2);
+
+            background-color: white;
+            border: 5px solid black;
+
+            margin-top: 20px;
+        }
+
+        button {
+            color: black;
+            background: white;
+            font-size: 1.4rem;
+            font-family: fantasy;
+            font-weight: bold;
+            padding: 10px;
+            border: 4px solid black;
+            width: 100%;
+        }
+
+        button:active {
+            cursor: pointer;
+            background-color: rgb(128, 90, 213);
+            color: white;
+        }
+
+        #form-error {
+            padding: 10px;
+
+            background-color: white;
+            border: 4px solid black;
+
+            font-weight: normal;
+        }
+
+        #form-error.error-active {
+            background-color: rgb(128, 90, 213);
+            color: white;
+            font-weight: bold;
+        }
+
+        #results-table {
+            width: calc(100% - 40px);
+            margin: 20px;
+
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        #results-table th,
+        #results-table td {
+            border: 4px solid black;
+            padding: 10px;
+
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        #results-table th {
+            background-color: rgb(128, 90, 213);
+            color: white;
+        }
+
+        #clear-results {
+            width: calc(100% - 40px);
+            margin: 0 20px 20px 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<table id="page-layout">
+    <tr>
+        <td colspan="2">
+            <header id="page-header">
+                <div>ФИО: Музыка Олег Сергеевич</div>
+                <div>Группа: P3323</div>
+                <div>Вариант: 53660</div>
+            </header>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="left-column">
+            <form id="point-form">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            X:
+                            <input type="radio" id="x-minus-4" name="x" value="-4">
+                            <label class="x-option" for="x-minus-4">-4</label>
+
+                            <input type="radio" id="x-minus-3" name="x" value="-3">
+                            <label class="x-option" for="x-minus-3">-3</label>
+
+                            <input type="radio" id="x-minus-2" name="x" value="-2">
+                            <label class="x-option" for="x-minus-2">-2</label>
+
+                            <input type="radio" id="x-minus-1" name="x" value="-1">
+                            <label class="x-option" for="x-minus-1">-1</label>
+
+                            <input type="radio" id="x-0" name="x" value="0">
+                            <label class="x-option" for="x-0">0</label>
+
+                            <input type="radio" id="x-1" name="x" value="1">
+                            <label class="x-option" for="x-1">1</label>
+
+                            <input type="radio" id="x-2" name="x" value="2">
+                            <label class="x-option" for="x-2">2</label>
+
+                            <input type="radio" id="x-3" name="x" value="3">
+                            <label class="x-option" for="x-3">3</label>
+
+                            <input type="radio" id="x-4" name="x" value="4">
+                            <label class="x-option" for="x-4">4</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Y:
+                            <input type="text" id="y" name="y" placeholder="(-5 ... 3)">
+                        </td>
+                        <td>
+                            R:
+                            <input type="checkbox" id="r-1" name="r" value="1">
+                            <label class="r-option" for="r-1">1</label>
+
+                            <input type="checkbox" id="r-2" name="r" value="2">
+                            <label class="r-option" for="r-2">2</label>
+                            <input type="checkbox" id="r-3" name="r" value="3">
+                            <label class="r-option" for="r-3">3</label>
+
+                            <input type="checkbox" id="r-4" name="r" value="4">
+                            <label class="r-option" for="r-4">4</label>
+
+                            <input type="checkbox" id="r-5" name="r" value="5">
+                            <label class="r-option" for="r-5">5</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit">Отправить данные</button>
+                        </td>
+                        <td>
+                            <button type="reset">Сбросить данные</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="form-error">
+                            Тут будут сообщения об ошибках...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" id="graphs"></td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td class="right-column">
+            <table id="results-table">
+                <thead>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>R</th>
+                    <th>Результат</th>
+                    <th>Дата и время</th>
+                </tr>
+                </thead>
+                <tbody id="results-body">
+                </tbody>
+            </table>
+            <button type="button" id="clear-results">Очистить историю</button>
+        </td>
+    </tr>
+</table>
+<script src="script.js"></script>
+</body>
+</html>
