@@ -78,20 +78,13 @@ public class Server {
             long currentTime = System.currentTimeMillis();
             long executionTime = System.nanoTime() - startTime;
 
-            Result result = new Result(
-                    x,
-                    y,
-                    r,
-                    hit,
-                    currentTime,
-                    executionTime
-            );
+            Result result = new Result(x, y, r, hit, currentTime, executionTime);
 
             history.add(result);
 
             String responseBody = "{\"x\":" + x + ",\"y\":" + y + ",\"r\":" + r + ",\"hit\":" + hit + ",\"timestamp\":" + currentTime + ",\"executionTime\":" + executionTime + "}";
 
-            sendResponse("200 OK", responseBody);
+            historyToJson(history)
         }
     }
 
@@ -117,8 +110,7 @@ public class Server {
         long timestamp;
         long executionTime;
 
-        Result(double x, double y, double r,
-               boolean hit, long timestamp, long executionTime) {
+        Result(double x, double y, double r, boolean hit, long timestamp, long executionTime) {
             this.x = x;
             this.y = y;
             this.r = r;
@@ -126,5 +118,25 @@ public class Server {
             this.timestamp = timestamp;
             this.executionTime = executionTime;
         }
+    }
+
+    private static String resultToJson(Result result) {
+        return "{\"x\":" + result.x + ",\"y\":" + result.y + ",\"r\":" + result.r + ",\"hit\":" + result.hit + ",\"timestamp\":" + result.timestamp + ",\"executionTime\":" + result.executionTime + "}";
+    }
+
+    private static String historyToJson(List<Result> history) {
+        StringBuilder json = new StringBuilder("[");
+
+        for (int i = 0; i < history.size(); i++) {
+            if (i > 0) {
+                json.append(",");
+            }
+
+            json.append(resultToJson(history.get(i)));
+        }
+
+        json.append("]");
+
+        return json.toString();
     }
 }
