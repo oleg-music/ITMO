@@ -19,7 +19,10 @@ public class Server {
 
             for (String pair : body.split("&")) {
                 String[] parts = pair.split("=", 2);
-                params.put(parts[0], parts[1]);
+
+                if (parts.length == 2) {
+                    params.put(parts[0], parts[1]);
+                }
             }
 
             String xText = params.get("x");
@@ -27,25 +30,21 @@ public class Server {
             String rText = params.get("r");
 
             if (!"POST".equals(method)) {
-                System.out.print(
-                        "HTTP/1.1 405 Method Not Allowed\r\n" +
-                                "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
-                                "{\"error\":\"Only POST requests are allowed\"}"
-                );
+                sendResponse("405 Method Not Allowed", "{\"error\":\"Only POST requests are allowed\"}");
                 continue;
             }
 
             if (xText == null || yText == null || rText == null) {
-                System.out.print(
-                        "HTTP/1.1 400 Bad Request\r\n" +
-                                "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
-                                "{\"error\":\"Missing x, y or r parameter\"}"
-                );
+                sendResponse("400 Bad Request", "{\"error\":\"Missing x, y or r parameter\"}");
                 continue;
             }
 
 
-            System.out.print("HTTP/1.1 200 OK\r\n" + "Content-Type: application/json; charset=UTF-8\r\n\r\n" + "{\"status\":\"ok\"}");
+            sendResponse("200 OK", "{\"status\":\"ok\"}");
         }
+    }
+
+    private static void sendResponse(String status, String body) {
+        System.out.print("HTTP/1.1 " + status + "\r\n" + "Content-Type: application/json; charset=UTF-8\r\n\r\n" + body);
     }
 }
