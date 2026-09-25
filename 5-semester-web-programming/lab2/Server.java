@@ -3,10 +3,14 @@ import com.fastcgi.FCGIInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     public static void main(String[] args) throws Exception {
         FCGIInterface fcgi = new FCGIInterface();
+
+        List<Result> history = new ArrayList<>();
 
         while (fcgi.FCGIaccept() >= 0) {
             long startTime = System.nanoTime();
@@ -74,6 +78,17 @@ public class Server {
             long currentTime = System.currentTimeMillis();
             long executionTime = System.nanoTime() - startTime;
 
+            Result result = new Result(
+                    x,
+                    y,
+                    r,
+                    hit,
+                    currentTime,
+                    executionTime
+            );
+
+            history.add(result);
+
             String responseBody = "{\"x\":" + x + ",\"y\":" + y + ",\"r\":" + r + ",\"hit\":" + hit + ",\"timestamp\":" + currentTime + ",\"executionTime\":" + executionTime + "}";
 
             sendResponse("200 OK", responseBody);
@@ -92,5 +107,24 @@ public class Server {
         boolean inTriangle = x >= 0 && y <= 0 && y >= 2 * x - r;
 
         return inRectangle || inCircle || inTriangle;
+    }
+
+    private static class Result {
+        double x;
+        double y;
+        double r;
+        boolean hit;
+        long timestamp;
+        long executionTime;
+
+        Result(double x, double y, double r,
+               boolean hit, long timestamp, long executionTime) {
+            this.x = x;
+            this.y = y;
+            this.r = r;
+            this.hit = hit;
+            this.timestamp = timestamp;
+            this.executionTime = executionTime;
+        }
     }
 }
