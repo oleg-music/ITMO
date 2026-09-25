@@ -39,8 +39,23 @@ public class Server {
                 continue;
             }
 
+            double x;
+            double y;
+            double r;
+
+            try {
+                x = Double.parseDouble(xText);
+                y = Double.parseDouble(yText);
+                r = Double.parseDouble(rText);
+            } catch (NumberFormatException e) {
+                sendResponse("400 Bad Request", "{\"error\":\"x, y and r must be numbers\"}");
+                continue;
+            }
+
 
             sendResponse("200 OK", "{\"status\":\"ok\"}");
+
+
         }
     }
 
