@@ -44,6 +44,11 @@ public class Server {
                 continue;
             }
 
+            if ("history".equals(action)) {
+                sendResponse("200 OK", historyToJson(history));
+                continue;
+            }
+
             String xText = params.get("x");
             String yText = params.get("y");
             String rText = params.get("r");

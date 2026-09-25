@@ -218,21 +218,39 @@ form.addEventListener("reset", () => {
     redrawGraphs([], null, null);
 });
 
-async function clearHistory() {
-    const response = await fetch("/fcgi-bin/hello-world.jar", {
+async function postRequest(body) {
+    const response = await fetch("/fcgi-bin/server.jar", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "action=clear"
+        body
     });
 
-    return await response.json();
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Ошибка сервера");
+    }
+
+    return data;
+}
+
+async function clearHistory() {
+    return await postRequest("action=clear");
+}
+
+async function loadHistory() {
+    return await postRequest("action=history");
 }
 
 clearResultsButton.addEventListener("click", async () => {
-    const history = await clearHistory();
-    renderHistory(history);
+    try {
+        const history = await clearHistory();
+        renderHistory(history);
+    } catch (error) {
+        showError(error.message);
+    }
 });
 
 function showError(message) {
@@ -243,16 +261,6 @@ function showError(message) {
 function clearError() {
     errorBox.textContent = "Тут будут сообщения об ошибках...";
     errorBox.classList.remove("error-active");
-}
-
-function isPointInside(x, y, r) {
-    const inRectangle = x >= -r && x <= 0 && y >= -r / 2 && y <= 0;
-
-    const inCircle = x <= 0 && y >= 0 && x * x + y * y <= (r / 2) * (r / 2);
-
-    const inTriangle = x >= 0 && y <= 0 && y >= 2 * x - r;
-
-    return inRectangle || inCircle || inTriangle;
 }
 
 function formatDate(timestamp) {
@@ -281,6 +289,17 @@ function renderHistory(history) {
         addResultRow(result);
     });
 }
+
+async function initializeHistory() {
+    try {
+        const history = await loadHistory();
+        renderHistory(history);
+    } catch (error) {
+        showError(error.message);
+    }
+}
+
+initializeHistory();
 
 form.addEventListener("submit", async event => {
     event.preventDefault();
@@ -338,29 +357,25 @@ form.addEventListener("submit", async event => {
         return;
     }
 
-    let history;
+    try {
+        let history;
 
-    for (const x of xValues) {
-        history = await sendPoint(x, y, r);
+        for (const x of xValues) {
+            history = await sendPoint(x, y, r);
+        }
+
+        renderHistory(history);
+
+        form.reset();
+
+        redrawGraphs(xValues, y, r);
+    } catch (error) {
+        showError(error.message);
     }
-
-    renderHistory(history);
-
-    form.reset();
-
-    redrawGraphs(xValues, y, r);
 });
 
 async function sendPoint(x, y, r) {
-    const response = await fetch("/fcgi-bin/hello-world.jar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `x=${x}&y=${y}&r=${r}`
-    });
-
-    return await response.json();
+    return await postRequest(`x=${x}&y=${y}&r=${r}`);
 }
 
 
