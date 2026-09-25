@@ -74,4 +74,14 @@ public class Server {
     private static void sendResponse(String status, String body) {
         System.out.print("HTTP/1.1 " + status + "\r\n" + "Content-Type: application/json; charset=UTF-8\r\n\r\n" + body);
     }
+
+    private static boolean isPointInside(double x, double y, double r) {
+        boolean inRectangle = x >= -r && x <= 0 && y >= -r / 2 && y <= 0;
+
+        boolean inCircle = x <= 0 && y >= 0 && x * x + y * y <= (r / 2) * (r / 2);
+
+        boolean inTriangle = x >= 0 && y <= 0 && y >= 2 * x - r;
+
+        return inRectangle || inCircle || inTriangle;
+    }
 }
