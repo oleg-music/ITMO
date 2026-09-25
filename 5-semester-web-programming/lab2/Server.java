@@ -17,6 +17,11 @@ public class Server {
 
             String method = System.getProperty("REQUEST_METHOD");
 
+            if (!"POST".equals(method)) {
+                sendResponse("405 Method Not Allowed", "{\"error\":\"Only POST requests are allowed\"}");
+                continue;
+            }
+
             int contentLength = Integer.parseInt(System.getProperty("CONTENT_LENGTH", "0"));
 
             String body = new String(System.in.readNBytes(contentLength), StandardCharsets.UTF_8);
@@ -34,11 +39,6 @@ public class Server {
             String xText = params.get("x");
             String yText = params.get("y");
             String rText = params.get("r");
-
-            if (!"POST".equals(method)) {
-                sendResponse("405 Method Not Allowed", "{\"error\":\"Only POST requests are allowed\"}");
-                continue;
-            }
 
             if (xText == null || yText == null || rText == null) {
                 sendResponse("400 Bad Request", "{\"error\":\"Missing x, y or r parameter\"}");
@@ -82,9 +82,10 @@ public class Server {
 
             history.add(result);
 
-            String responseBody = "{\"x\":" + x + ",\"y\":" + y + ",\"r\":" + r + ",\"hit\":" + hit + ",\"timestamp\":" + currentTime + ",\"executionTime\":" + executionTime + "}";
-
-            historyToJson(history)
+            sendResponse(
+                    "200 OK",
+                    historyToJson(history)
+            );
         }
     }
 
