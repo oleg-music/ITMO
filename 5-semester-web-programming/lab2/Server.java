@@ -9,6 +9,8 @@ public class Server {
         FCGIInterface fcgi = new FCGIInterface();
 
         while (fcgi.FCGIaccept() >= 0) {
+            long startTime = System.nanoTime();
+
             String method = System.getProperty("REQUEST_METHOD");
 
             int contentLength = Integer.parseInt(System.getProperty("CONTENT_LENGTH", "0"));
@@ -67,7 +69,14 @@ public class Server {
                 continue;
             }
 
-            sendResponse("200 OK", "{\"status\":\"ok\"}");
+            boolean hit = isPointInside(x, y, r);
+
+            long currentTime = System.currentTimeMillis();
+            long executionTime = System.nanoTime() - startTime;
+
+            String responseBody = "{\"x\":" + x + ",\"y\":" + y + ",\"r\":" + r + ",\"hit\":" + hit + ",\"timestamp\":" + currentTime + ",\"executionTime\":" + executionTime + "}";
+
+            sendResponse("200 OK", responseBody);
         }
     }
 
