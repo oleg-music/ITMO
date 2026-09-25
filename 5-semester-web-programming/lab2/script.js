@@ -257,6 +257,7 @@ function addResultRow(result) {
         <td>${result.r}</td>
         <td>${result.hit ? "Попадание" : "Промах"}</td>
         <td>${formatDate(result.timestamp)}</td>
+        <td>${result.executionTime} нс</td>
     `;
 
     resultsBody.appendChild(row);
@@ -280,7 +281,15 @@ function loadResults() {
 
 loadResults();
 
-form.addEventListener("submit", event => {
+function renderHistory(history) {
+    resultsBody.innerHTML = "";
+
+    history.forEach(result => {
+        addResultRow(result);
+    });
+}
+
+form.addEventListener("submit", async event => {
     event.preventDefault();
     clearError();
 
@@ -336,19 +345,13 @@ form.addEventListener("submit", event => {
         return;
     }
 
-    const timestamp = Date.now();
+    let history;
 
-    const results = xValues.map(x => {
-        return {
-            x, y, r, hit: isPointInside(x, y, r), timestamp
-        };
-    });
+    for (const x of xValues) {
+        history = await sendPoint(x, y, r);
+    }
 
-    results.forEach(result => {
-        addResultRow(result);
-    });
-
-    saveResults(results);
+    renderHistory(history);
 
     form.reset();
 
