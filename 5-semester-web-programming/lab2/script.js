@@ -355,5 +355,17 @@ form.addEventListener("submit", event => {
     redrawGraphs(xValues, y, r);
 });
 
+async function sendPoint(x, y, r) {
+    const response = await fetch("/fcgi-bin/hello-world.jar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `x=${x}&y=${y}&r=${r}`
+    });
+
+    return await response.json();
+}
+
 
 
