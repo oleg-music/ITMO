@@ -218,9 +218,21 @@ form.addEventListener("reset", () => {
     redrawGraphs([], null, null);
 });
 
-clearResultsButton.addEventListener("click", () => {
-    resultsBody.innerHTML = "";
-    localStorage.removeItem(STORAGE_KEY);
+async function clearHistory() {
+    const response = await fetch("/fcgi-bin/hello-world.jar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "action=clear"
+    });
+
+    return await response.json();
+}
+
+clearResultsButton.addEventListener("click", async () => {
+    const history = await clearHistory();
+    renderHistory(history);
 });
 
 function showError(message) {
