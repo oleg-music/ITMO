@@ -52,10 +52,22 @@ public class Server {
                 continue;
             }
 
+            if (y <= -3 || y >= 3) {
+                sendResponse("400 Bad Request", "{\"error\":\"y must be in (-3, 3)\"}");
+                continue;
+            }
+
+            if (r <= 1 || r >= 4) {
+                sendResponse("400 Bad Request", "{\"error\":\"r must be in (1, 4)\"}");
+                continue;
+            }
+
+            if (x != -5 && x != -4 && x != -3 && x != -2 && x != -1 && x != 0 && x != 1 && x != 2 && x != 3) {
+                sendResponse("400 Bad Request", "{\"error\":\"invalid x value\"}");
+                continue;
+            }
 
             sendResponse("200 OK", "{\"status\":\"ok\"}");
-
-
         }
     }
 
