@@ -241,7 +241,17 @@ async function clearHistory() {
 }
 
 async function loadHistory() {
-    return await postRequest("action=history");
+    const response = await fetch("/fcgi-bin/server.jar", {
+        method: "GET"
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Ошибка сервера");
+    }
+
+    return data;
 }
 
 clearResultsButton.addEventListener("click", async () => {

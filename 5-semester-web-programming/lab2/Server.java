@@ -17,10 +17,9 @@ public class Server {
 
             String method = System.getProperty("REQUEST_METHOD");
 
-            if (!"POST".equals(method)) {
-                sendResponse("405 Method Not Allowed", "{\"error\":\"Only POST requests are allowed\"}");
-                continue;
-            }
+
+
+
 
             int contentLength = Integer.parseInt(System.getProperty("CONTENT_LENGTH", "0"));
 
@@ -38,13 +37,22 @@ public class Server {
 
             String action = params.get("action");
 
-            if ("clear".equals(action)) {
-                history.clear();
-                sendResponse("200 OK", historyToJson(history));
+
+            if ("GET".equals(method)) {
+                if ("history".equals(action)) {
+                    sendResponse("200 OK", historyToJson(history));
+                    continue;
+                }
+            }
+
+            if (!"POST".equals(method)) {
+                sendResponse("405 Method Not Allowed", "{\"error\":\"Only POST requests are allowed\"}");
                 continue;
             }
 
-            if ("history".equals(action)) {
+
+            if ("clear".equals(action)) {
+                history.clear();
                 sendResponse("200 OK", historyToJson(history));
                 continue;
             }
