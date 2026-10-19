@@ -1,0 +1,29 @@
+lab3/
+├── pom.xml
+│
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── ru/
+│       │       └── itmo/
+│       │           └── web/
+│       │               ├── controller/
+│       │               ├── model/
+│       │               └── service/
+│       │
+│       └── webapp/
+│           ├── assets/
+│           │   ├── background-paper-texture.jfif
+│           │   ├── background-paper-texture.avif
+│           │   └── favicon.png
+│           ├── js/
+│           │   └── script.js
+│           └── WEB-INF/
+│               └── views/
+│                   └── index.html
+│
+├── task.txt
+└── legacy/
+    ├── Server.java
+    ├── fastcgi-lib.jar
+    └── httpd-conf-template.conf
